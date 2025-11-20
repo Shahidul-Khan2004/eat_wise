@@ -40,7 +40,7 @@ class ProfileAPIView(generics.RetrieveUpdateAPIView):
 
 class FoodItemAPIView(generics.ListAPIView):
     serializer_class = FoodItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = []
 
     def get_queryset(self):
         queryset = FoodItem.objects.all()
@@ -55,10 +55,10 @@ class FoodItemAPIView(generics.ListAPIView):
 class FoodItemCreateView(generics.ListCreateAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = []
 
 class FoodItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = []
     lookup_field = 'pk'

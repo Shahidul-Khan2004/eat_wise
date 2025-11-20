@@ -16,16 +16,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const apiBase = `${location.protocol}//${location.hostname}:8000/api`;
-    const res = await fetch(`${apiBase}/users/`, {
+    // backend registration endpoint is /api/register/
+    const res = await fetch(`${apiBase}/register/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     });
 
     if (res.ok) {
-      msg.textContent = 'Registration successful!';
+      // registration serializer returns tokens + basic user info
+      try{
+        const data = await res.json();
+        if(data.access) localStorage.setItem('accessToken', data.access);
+        if(data.refresh) localStorage.setItem('refreshToken', data.refresh);
+      }catch(_){ }
+      try{ localStorage.setItem('username', body.username); localStorage.setItem('email', body.email); }catch(_){ }
+      msg.textContent = 'Registration successful! Redirecting to profile...';
       msg.className = 'ok';
       form.reset();
+      setTimeout(()=>{ location.href='profile.html'; },700);
     } else {
       let text = '';
       try { text = await res.text(); } catch (_) {}

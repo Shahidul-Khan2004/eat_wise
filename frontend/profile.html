@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile | Eat Wise</title>
+  <link rel="stylesheet" href="profile.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>Your Profile</h1>
+    <div class="userinfo">
+      <label>
+        <span>Name</span>
+        <input id="displayName" disabled />
+      </label>
+      <label>
+        <span>Email</span>
+        <input id="displayEmail" disabled />
+      </label>
+      <hr />
+    </div>
+    <form id="profileForm">
+      <label>
+        <span>Household Size</span>
+        <input name="householdSize" type="number" min="1" required />
+      </label>
+      <label>
+        <span>Dietary Preferences</span>
+        <input name="dietaryPreferences" required />
+      </label>
+      <label>
+        <span>Location</span>
+        <input name="location" required />
+      </label>
+      <label>
+        <span>Budget Range</span>
+        <input name="budgetRange" required />
+      </label>
+      <button type="submit">Save Changes</button>
+      <div id="msg"></div>
+    </form>
+    <p class="muted"><a href="inventory.html">Inventory</a> · <a href="login.html">Login</a> · <a href="register.html">Register</a></p>
+  </div>
+  <script src="profile.js"></script>
+</body>
+</html>
