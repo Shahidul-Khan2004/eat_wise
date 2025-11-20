@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Test, Profile
+from .models import Test, Profile, FoodItem
 
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,4 +38,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
+        fields = "__all__"
+
+class FoodItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FoodItem
         fields = "__all__"

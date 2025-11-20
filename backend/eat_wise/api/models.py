@@ -17,3 +17,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Profile"
+
+class FoodItem(models.Model):
+    name = models.CharField(max_length=128)
+    category = models.CharField(max_length=256)
+    expirationTimeDays = models.PositiveIntegerField()
+    costPerUnit = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.name + "expires in " + str(self.expirationTimeDays) + " days"
