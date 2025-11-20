@@ -2,12 +2,14 @@ from . import views
 from django.urls import path
 
 urlpatterns = [
-    path('test/<int:pk>/', views.TestPostRetriveUpdateDestroyView.as_view(), name='test-detail'),
-    path('test/', views.TestListCreateView.as_view(), name='test-list-create'),
-    path('users/', views.UserAPIView.as_view(), name='user-list-create'),
-    path('users/<int:pk>/', views.UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
-    path('users/profiles/<int:pk>/', views.ProfileAPIView.as_view(), name='profile-detail'),
+    # path('test/<int:pk>/', views.TestPostRetriveUpdateDestroyView.as_view(), name='test-detail'),
+    # path('test/', views.TestListCreateView.as_view(), name='test-list-create'),
+    # path('users/', views.UserAPIView.as_view(), name='user-list-create'),
+    # path('users/<int:pk>/', views.UserRetrieveUpdateDestroyView.as_view(), name='user-detail'),
+    # path('users/profiles/<int:pk>/', views.ProfileAPIView.as_view(), name='profile-detail'),
+    path('register/', views.UserRegisterView.as_view(), name='user-register'),
+    path('profile/', views.ProfileAPIView.as_view(), name='profile-detail'),
     path('foodItems/', views.FoodItemAPIView.as_view(), name='fooditem-list-create'),
-    path('foodItems/manage/', views.FoodItemCreateView.as_view(), name='fooditem-manage'),
+    # path('foodItems/create/', views.FoodItemCreateView.as_view(), name='fooditem-manage'),
     path('foodItems/manage/<int:pk>/', views.FoodItemRetrieveUpdateDestroyView.as_view(), name='fooditem-detail'),
 ]
