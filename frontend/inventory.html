@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EatWise — Inventory</title>
+  <link rel="stylesheet" href="register.css" />
+  <link rel="stylesheet" href="inventory.css" />
+  <script defer src="inventory.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="header card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="eatwiselogo.png" alt="EatWise" class="logo" />
+        <h1 style="margin:0">Inventory</h1>
+      </div>
+      <p class="muted" style="margin:6px 0 0">Browse and filter your food items</p>
+    </header>
+
+    <section class="card">
+      <div class="filters">
+        <input id="q" type="search" placeholder="Search by name..." />
+        <select id="category">
+          <option value="all">All categories</option>
+        </select>
+        <select id="expiry">
+          <option value="all">All items</option>
+        </select>
+        <button id="refreshBtn" type="button">Refresh</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <ul id="items" class="items"></ul>
+    </section>
+
+    <section class="card" id="details" hidden>
+      <h2 id="d-name"></h2>
+      <div class="details-grid">
+        <div><strong>Category:</strong> <span id="d-category"></span></div>
+        <div><strong>Cost / Unit:</strong> <span id="d-cost"></span></div>
+        <div><strong>Expires in:</strong> <span id="d-exp"></span></div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
