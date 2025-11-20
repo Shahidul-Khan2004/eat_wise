@@ -1,7 +1,41 @@
 from rest_framework import serializers
-from .models import Test
+from django.contrib.auth.models import User
+from .models import Test, Profile
 
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Test
         fields = ['id', 'name']
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    householdSize = serializers.IntegerField(write_only=True)
+    dietaryPreferences = serializers.CharField(write_only=True)
+    location = serializers.CharField(write_only=True)
+    budgetRange = serializers.CharField(write_only=True)
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'password', 'email', 'householdSize', 'dietaryPreferences', 'location', 'budgetRange']
+        extra_kwargs = {'password': {'write_only': True}}
+    
+    def create(self, validated_data):
+        householdSize = validated_data.pop('householdSize')
+        dietaryPreferences = validated_data.pop('dietaryPreferences')
+        location = validated_data.pop('location')
+        budgetRange = validated_data.pop('budgetRange')
+        
+        user = User.objects.create_user(**validated_data)
+
+        Profile.objects.create(
+            user=user,
+            householdSize=householdSize,
+            dietaryPreferences=dietaryPreferences,
+            location=location,
+            budgetRange=budgetRange
+        )
+        return user
+    
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
