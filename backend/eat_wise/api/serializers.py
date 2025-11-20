@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from .models import Test, Profile, FoodItem
 
@@ -33,6 +34,21 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             budgetRange=budgetRange
         )
         return user
+    
+    def to_representation(self, instance):
+        return {
+            'id': instance.id,
+            'username': instance.username,
+            'email': instance.email,
+        }
+
+class TokenUserRegisterSerializer(UserRegisterSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        refresh = RefreshToken.for_user(instance)
+        data['access'] = str(refresh.access_token)
+        data['refresh'] = str(refresh)
+        return data
     
 
 class ProfileSerializer(serializers.ModelSerializer):

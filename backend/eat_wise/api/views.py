@@ -1,11 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from rest_framework import permissions
-from rest_framework.response import Response
-from rest_framework import views
-from rest_framework import generics
+from rest_framework import generics, permissions
 from .models import Test, Profile, FoodItem
-from .serializers import TestSerializer, UserRegisterSerializer, ProfileSerializer, FoodItemSerializer
+from .serializers import (TestSerializer, UserRegisterSerializer, ProfileSerializer,
+                        FoodItemSerializer, TokenUserRegisterSerializer)
 
 # Create your views here.
 class TestListCreateView(generics.ListCreateAPIView):
@@ -28,14 +26,21 @@ class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = []  # Allow unrestricted access for testing purposes
     lookup_field = 'pk'
 
-class ProfileAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Profile.objects.all()
+class UserRegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = TokenUserRegisterSerializer
+    permission_classes = [permissions.AllowAny]
+
+class ProfileAPIView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
-    permission_classes = []  # Allow unrestricted access for testing purposes
-    lookup_field = 'pk'
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return Profile.objects.get(user=self.request.user)
 
 class FoodItemAPIView(generics.ListAPIView):
     serializer_class = FoodItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         queryset = FoodItem.objects.all()
@@ -50,8 +55,10 @@ class FoodItemAPIView(generics.ListAPIView):
 class FoodItemCreateView(generics.ListCreateAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class FoodItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = FoodItem.objects.all()
     serializer_class = FoodItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'pk'
