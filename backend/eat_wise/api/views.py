@@ -65,7 +65,7 @@ class FoodItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 #Oishi's First APIView 
 
-class ResourcesCreateView(generics.ListCreateAPIView):
+class ResourcesCreateView(generics.ListAPIView):
     queryset = Resources.objects.all()
     serializer_class = ResourcesSerializer
     permission_classes = []

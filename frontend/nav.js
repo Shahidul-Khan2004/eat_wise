@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Common link
   links.push({ href: 'index.html', label: 'Home' });
 
+  // Resources is public (no backend change needed) so always show it
+  links.push({ href: 'resources.html', label: 'Resources' });
+
   if(!isLoggedIn){
     links.push({ href: 'register.html', label: 'Register' });
     links.push({ href: 'login.html', label: 'Login' });
