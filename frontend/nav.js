@@ -13,21 +13,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const isLoggedIn = !!localStorage.getItem('accessToken');
   const links = [];
 
-  // Common link
-  links.push({ href: 'index.html', label: 'Home' });
+  // Logo as home link
+  const logoLink = document.createElement('a');
+  logoLink.href = 'index.html';
+  logoLink.className = 'nav-logo-link';
+  logoLink.innerHTML = '<img src="eatwiselogo2.png" alt="EatWise" class="nav-logo" />';
+  navRoot.appendChild(logoLink);
 
-  // Resources is public (no backend change needed) so always show it
+  // Resources and inventory are public (no backend change needed) so always show them
   links.push({ href: 'resources.html', label: 'Resources' });
+  links.push({ href: 'inventory.html', label: 'Inventory' });
 
+  // Don't show register/login in navbar on home page (hero has buttons)
+  const isHomePage = current === 'index.html';
+  
   if(!isLoggedIn){
-    links.push({ href: 'register.html', label: 'Register' });
-    links.push({ href: 'login.html', label: 'Login' });
+    if (!isHomePage) {
+      links.push({ href: 'register.html', label: 'Register' });
+      links.push({ href: 'login.html', label: 'Login' });
+    }
   } else {
+    // Show profile for logged-in users
     links.push({ href: 'profile.html', label: 'Profile' });
-    links.push({ href: 'inventory.html', label: 'Inventory' });
   }
-
-  const current = location.pathname.split('/').pop() || 'index.html';
 
   const frag = document.createDocumentFragment();
   links.forEach(l => {

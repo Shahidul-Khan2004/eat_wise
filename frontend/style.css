@@ -17,6 +17,23 @@
     font-family: system-ui, sans-serif;
     align-items: center;
 }
+.nav-logo-link {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem;
+}
+.nav-logo {
+    height: 40px;
+    width: auto;
+    transition: transform 0.2s ease;
+    object-fit: cover;
+    object-position: center;
+    padding: 0;
+    margin: -4px 0;
+}
+.nav-logo:hover {
+    transform: scale(1.05);
+}
 #navbar a {
     text-decoration: none;
     color: #386641;
@@ -51,6 +68,15 @@ body.with-nav {
 }
 body.with-nav .card{margin-top:24px}
 
+/* Center container for login/register pages */
+.page-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
+  padding: 2rem;
+}
+
 /* Override for home page to prevent layout conflicts */
 body.with-nav.home-page {
   display: block;
@@ -62,37 +88,61 @@ body.with-nav.home-page {
   align-items: center;
   justify-content: center;
   min-height: calc(100vh - 60px);
-  background: linear-gradient(135deg, #f7f8f9 0%, #e8f5e8 100%);
+  background: linear-gradient(135deg, #386641 0%, #6a994e 50%, #a7c957 100%);
   padding: 2rem;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: dotMove 20s linear infinite;
 }
 .hero-content {
   text-align: center;
-  max-width: 500px;
+  max-width: 600px;
   animation: fadeInUp 0.8s ease-out;
+  position: relative;
+  z-index: 1;
 }
 .hero-logo {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 4px 12px rgba(56, 102, 65, 0.2));
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
   transition: transform 0.3s ease;
+  animation: float 3s ease-in-out infinite;
 }
 .hero-logo:hover {
-  transform: scale(1.05);
+  transform: scale(1.1) rotate(5deg);
 }
 .hero-title {
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: 700;
-  color: #386641;
+  color: #ffffff;
   margin: 0 0 1rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  letter-spacing: -1px;
 }
 .hero-subtitle {
-  font-size: 1.25rem;
-  color: #6b7280;
-  margin: 0 0 2.5rem;
+  font-size: 1.4rem;
+  color: #f0f0f0;
+  margin: 0 0 0.8rem;
   line-height: 1.6;
+  font-weight: 500;
+}
+.hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+  margin: 0 0 2.5rem;
+  line-height: 1.5;
 }
 .hero-actions {
   display: flex;
@@ -112,24 +162,47 @@ body.with-nav.home-page {
   justify-content: center;
 }
 .btn-primary {
-  background: #386641;
-  color: white;
-  box-shadow: 0 2px 8px rgba(56, 102, 65, 0.3);
-}
-.btn-primary:hover {
-  background: #2d5233;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(56, 102, 65, 0.4);
-}
-.btn-secondary {
   background: white;
   color: #386641;
-  border: 2px solid #386641;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.btn-primary:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 2px solid white;
+  backdrop-filter: blur(10px);
 }
 .btn-secondary:hover {
-  background: #386641;
+  background: rgba(255,255,255,0.2);
+  border-color: white;
   color: white;
   transform: translateY(-1px);
+}
+.feature-highlights {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: fadeInUp 1s ease-out;
+}
+.feature-icon {
+  font-size: 2rem;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 @keyframes fadeInUp {
   from {
@@ -140,6 +213,14 @@ body.with-nav.home-page {
     opacity: 1;
     transform: translateY(0);
   }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes dotMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
 }
 @media (max-width: 600px) {
   .hero-title { font-size: 2.5rem; }
