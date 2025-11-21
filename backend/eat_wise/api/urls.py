@@ -12,4 +12,5 @@ urlpatterns = [
     path('foodItems/', views.FoodItemAPIView.as_view(), name='fooditem-list-create'),
     # path('foodItems/create/', views.FoodItemCreateView.as_view(), name='fooditem-manage'),
     path('foodItems/manage/<int:pk>/', views.FoodItemRetrieveUpdateDestroyView.as_view(), name='fooditem-detail'),
+    path('resources/manage/', views.ResourcesCreateView.as_view(),name='resources-create')
 ]

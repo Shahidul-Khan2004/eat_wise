@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
-from .models import Test, Profile, FoodItem
+from .models import Test, Profile, FoodItem , Resources
 from .serializers import (TestSerializer, UserRegisterSerializer, ProfileSerializer,
-                        FoodItemSerializer, TokenUserRegisterSerializer)
+                        FoodItemSerializer, TokenUserRegisterSerializer,ResourcesSerializer)
 
 # Create your views here.
 class TestListCreateView(generics.ListCreateAPIView):
@@ -62,3 +62,11 @@ class FoodItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FoodItemSerializer
     permission_classes = []
     lookup_field = 'pk'
+
+#Oishi's First APIView 
+
+class ResourcesCreateView(generics.ListCreateAPIView):
+    queryset = Resources.objects.all()
+    serializer_class = ResourcesSerializer
+    permission_classes = []
+    
