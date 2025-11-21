@@ -15,7 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
       budgetRange: form.budgetRange.value.trim(),
     };
 
-    const apiBase = `${location.protocol}//${location.hostname}:8000/api`;
+    let apiBase;
+    // When opening the page via file:// (or when hostname is empty),
+    // default to localhost where Django runserver listens.
+    if (location.protocol === 'file:' || !location.hostname) {
+      apiBase = 'http://127.0.0.1:8000/api';
+    } else {
+      apiBase = `${location.protocol}//${location.hostname}:8000/api`;
+    }
     // backend registration endpoint is /api/register/
     const res = await fetch(`${apiBase}/register/`, {
       method: 'POST',
