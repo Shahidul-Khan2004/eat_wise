@@ -12,5 +12,11 @@ urlpatterns = [
     path('foodItems/', views.FoodItemAPIView.as_view(), name='fooditem-list-create'),
     # path('foodItems/create/', views.FoodItemCreateView.as_view(), name='fooditem-manage'),
     path('foodItems/manage/<int:pk>/', views.FoodItemRetrieveUpdateDestroyView.as_view(), name='fooditem-detail'),
-    path('resources/manage/', views.ResourcesCreateView.as_view(),name='resources-create')
+    path('resources/manage/', views.ResourcesCreateView.as_view(),name='resources-create'),
+
+    path('userInventory/', views.UserInventoryListCreateView.as_view(), name='user-inventory-list'),
+    path('userInventory/<int:pk>/', views.UserInventoryDetailView.as_view(), name='user-inventory-detail'),
+    
+    path('consumptionLogs/', views.ConsumptionLogListCreateView.as_view(), name='consumption-log-list'),
+    path('consumptionLogs/<int:pk>/', views.ConsumptionLogDetailView.as_view(), name='consumption-log-detail'),
 ]

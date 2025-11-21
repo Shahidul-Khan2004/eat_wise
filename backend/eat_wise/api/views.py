@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, permissions
-from .models import Test, Profile, FoodItem , Resources
+from .models import Test, Profile, FoodItem , Resources, UserInventory, ConsumptionLog
 from .serializers import (TestSerializer, UserRegisterSerializer, ProfileSerializer,
-                        FoodItemSerializer, TokenUserRegisterSerializer,ResourcesSerializer)
+                        FoodItemSerializer, TokenUserRegisterSerializer,ResourcesSerializer,
+                        UserInventorySerializer, ConsumptionLogSerializer)
 
 # Create your views here.
 class TestListCreateView(generics.ListCreateAPIView):
@@ -62,6 +63,46 @@ class FoodItemRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = FoodItemSerializer
     permission_classes = []
     lookup_field = 'pk'
+
+# User Inventory Views
+class UserInventoryListCreateView(generics.ListCreateAPIView):
+    serializer_class = UserInventorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        # Only show this user's inventory
+        return UserInventory.objects.filter(user=self.request.user)
+    
+    def perform_create(self, serializer):
+        # Auto-assign logged-in user when creating
+        serializer.save(user=self.request.user)
+
+class UserInventoryDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = UserInventorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return UserInventory.objects.filter(user=self.request.user)
+
+# Consumption Log Views
+class ConsumptionLogListCreateView(generics.ListCreateAPIView):
+    serializer_class = ConsumptionLogSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        # Only show this user's consumption logs
+        return ConsumptionLog.objects.filter(user=self.request.user).order_by('-consumption_date')
+    
+    def perform_create(self, serializer):
+        # Auto-assign logged-in user
+        serializer.save(user=self.request.user)
+
+class ConsumptionLogDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ConsumptionLogSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        return ConsumptionLog.objects.filter(user=self.request.user)
 
 #Oishi's First APIView 
 

@@ -8,8 +8,7 @@
 </head>
 <body>
   <div id="navbar"></div>
-  <div class="page-center">
-    <div class="card">
+  <div class="card">
     <h1>Your Profile</h1>
     <div class="userinfo">
       <label>
@@ -42,8 +41,73 @@
       <button type="submit">Save Changes</button>
       <div id="msg"></div>
     </form>
-    <p class="muted"><a href="inventory.html">Inventory</a> · <a href="login.html">Login</a> · <a href="register.html">Register</a></p>
+
+    <hr style="margin: 2rem 0;" />
+
+    <!-- User Inventory Section -->
+    <h2>My Inventory</h2>
+    <div id="inventorySection">
+      <button type="button" id="addInventoryBtn" class="btn-add">+ Add Item</button>
+      <div id="addInventoryForm" style="display:none;">
+        <h3>Add to Inventory</h3>
+        <form id="inventoryForm">
+          <label>
+            <span>Food Item</span>
+            <select id="invFoodItem" required></select>
+          </label>
+          <label>
+            <span>Quantity</span>
+            <input type="number" step="0.01" id="invQuantity" required />
+          </label>
+          <label>
+            <span>Unit</span>
+            <input type="text" id="invUnit" placeholder="kg, g, pieces" required />
+          </label>
+          <label>
+            <span>Expiry Date (optional)</span>
+            <input type="date" id="invExpiry" />
+          </label>
+          <button type="submit">Add to Inventory</button>
+          <button type="button" id="cancelInvBtn">Cancel</button>
+        </form>
+      </div>
+      <div id="inventoryList" style="margin-top:1rem;"></div>
     </div>
+
+    <hr style="margin: 2rem 0;" />
+
+    <!-- Consumption Log Section -->
+    <h2>Log Food Consumption</h2>
+    <div id="consumptionSection">
+      <button type="button" id="logConsumptionBtn" class="btn-add">+ Log Consumption</button>
+      <div id="logConsumptionForm" style="display:none;">
+        <h3>Log Consumption</h3>
+        <form id="consumptionForm">
+          <label>
+            <span>Food Item</span>
+            <select id="consFoodItem" required></select>
+          </label>
+          <label>
+            <span>Quantity Consumed</span>
+            <input type="number" step="0.01" id="consQuantity" required />
+          </label>
+          <label>
+            <span>Unit</span>
+            <input type="text" id="consUnit" placeholder="kg, g, pieces" required />
+          </label>
+          <label>
+            <span>Notes (optional)</span>
+            <textarea id="consNotes" placeholder="e.g., breakfast, dinner"></textarea>
+          </label>
+          <button type="submit">Log Consumption</button>
+          <button type="button" id="cancelConsBtn">Cancel</button>
+        </form>
+      </div>
+      <h3>Consumption History</h3>
+      <div id="consumptionList" style="margin-top:1rem;"></div>
+    </div>
+
+    <p class="muted" style="margin-top:2rem;"><a href="inventory.html">Inventory</a> · <a href="login.html">Login</a> · <a href="register.html">Register</a></p>
   </div>
   <script src="profile.js"></script>
   <script defer src="nav.js"></script>

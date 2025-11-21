@@ -60,13 +60,11 @@
 /* Layout fix: pages originally center a single card via body{display:grid;place-items:center}. 
      When navbar is added that grid causes overlap or wrong centering. Use body.with-nav to override. */
 body.with-nav {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  display: block;
   min-height: 100vh;
-  padding: 0; /* individual pages already add padding around their card; keep navbar flush */
+  padding: 0;
 }
-body.with-nav .card{margin-top:24px}
+body.with-nav .card{margin-top:0}
 
 /* Center container for login/register pages */
 .page-center {

@@ -1,7 +1,7 @@
 :root{--bg:#f7f8f9;--card:#ffffff;--text:#1f2937;--muted:#6b7280;--primary:#386641;--border:#e5e7eb}
 *{box-sizing:border-box}html,body{height:100%}
-body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);display:grid;place-items:center;padding:24px}
-.card{width:min(640px,94vw);background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 22px 20px;box-shadow:0 2px 12px rgba(0,0,0,.05)}
+body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;color:var(--text);background:var(--bg);padding:24px}
+.card{width:min(800px,94vw);background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 22px 20px;box-shadow:0 2px 12px rgba(0,0,0,.05);max-width:100%;margin:0 auto}
 h1{margin:0 0 14px;font-size:22px}
 form{display:grid;gap:12px;margin-top:8px}
 label{display:grid;gap:6px}
@@ -15,3 +15,14 @@ button:hover{filter:brightness(.98)}
 #msg.err{color:#b91c1c}
 .muted{color:var(--muted);margin:14px 0 0;font-size:13px}
 .muted a{color:inherit}
+.btn-add{background:var(--primary);color:white;border:none;padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer;margin-bottom:8px}
+.btn-add:hover{filter:brightness(0.95)}
+textarea{padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;outline:none;font-family:inherit;min-height:60px;width:100%}
+select{padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#fff;outline:none;width:100%}
+h2{font-size:1.3rem;color:var(--text);margin:0 0 1rem}
+h3{font-size:1.1rem;color:var(--text);margin:0 0 0.8rem}
+.inv-item,.cons-item{border:1px solid var(--border);padding:12px;border-radius:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;background:#fff}
+.inv-item:hover,.cons-item:hover{box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+.inv-item button,.cons-item button{background:#bc4749;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:13px;font-weight:600}
+.inv-item button:hover,.cons-item button:hover{background:#a63d3f}
+#addInventoryForm,#logConsumptionForm{background:#f9fafb;margin-top:1rem;padding:1.2rem;border:1px solid var(--border);border-radius:8px}

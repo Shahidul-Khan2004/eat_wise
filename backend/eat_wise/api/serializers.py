@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-from .models import Test, Profile, FoodItem,Resources 
+from .models import Test, Profile, FoodItem, Resources, UserInventory, ConsumptionLog 
 
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -61,6 +61,24 @@ class FoodItemSerializer(serializers.ModelSerializer):
         model = FoodItem
         fields = "__all__"
 
+class UserInventorySerializer(serializers.ModelSerializer):
+    food_item_name = serializers.ReadOnlyField(source='food_item.name')
+    food_item_category = serializers.ReadOnlyField(source='food_item.category')
+    
+    class Meta:
+        model = UserInventory
+        fields = ['id', 'food_item', 'food_item_name', 'food_item_category', 
+                  'quantity', 'unit', 'purchase_date', 'expiry_date']
+        read_only_fields = ['purchase_date']
+
+class ConsumptionLogSerializer(serializers.ModelSerializer):
+    food_item_name = serializers.ReadOnlyField(source='food_item.name')
+    
+    class Meta:
+        model = ConsumptionLog
+        fields = ['id', 'food_item', 'food_item_name', 'quantity_consumed', 
+                  'unit', 'consumption_date', 'notes']
+        read_only_fields = ['consumption_date']
 
 #Oishi's code starts here 
 
