@@ -1,11 +1,14 @@
 (function(){
+  // Only run on resources page
+  const currentPage = location.pathname.split('/').pop() || 'index.html';
+  if (currentPage !== 'resources.html') return;
+
   const apiBase = (location.protocol === 'file:' || !location.hostname)
     ? 'http://127.0.0.1:8000/api'
     : `${location.protocol}//${location.hostname}:8000/api`;
 
   const els = {};
   document.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.add('with-nav');
     els.grid = document.getElementById('res-grid');
     els.msg = document.getElementById('res-msg');
     els.q = document.getElementById('res-q');

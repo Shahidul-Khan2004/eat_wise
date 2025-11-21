@@ -12,21 +12,32 @@
 </head>
 <body>
   <div id="navbar"></div>
-  <main class="card">
-    <h1>Resources</h1>
-    <p class="muted" style="margin-top:0">Helpful articles, links and guides. New items may appear over time.</p>
-    <div class="filters" id="res-filters">
-      <input id="res-q" type="search" placeholder="Search title..." />
-      <select id="res-category">
-        <option value="all">All categories</option>
-      </select>
-      <select id="res-type">
-        <option value="all">All types</option>
-      </select>
-      <button id="res-refresh" type="button">Refresh</button>
-    </div>
-    <div id="res-msg" class="muted" style="min-height:1.2em;margin-top:10px"></div>
-    <div id="res-grid" class="resources-grid"></div>
-  </main>
+  <div class="page">
+    <header class="header card">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="eatwiselogo.png" alt="EatWise" class="logo" />
+        <h1 style="margin:0">Resources</h1>
+      </div>
+      <p class="muted" style="margin:6px 0 0">Helpful articles, links and guides. New items may appear over time.</p>
+    </header>
+
+    <section class="card">
+      <div class="filters" id="res-filters">
+        <input id="res-q" type="search" placeholder="Search title..." />
+        <select id="res-category">
+          <option value="all">All categories</option>
+        </select>
+        <select id="res-type">
+          <option value="all">All types</option>
+        </select>
+        <button id="res-refresh" type="button">Refresh</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div id="res-msg" class="muted" style="min-height:1.2em;margin-top:0"></div>
+      <div id="res-grid" class="resources-grid"></div>
+    </section>
+  </div>
 </body>
 </html>

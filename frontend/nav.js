@@ -1,6 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Ensure body gets layout class for navbar styling override
   document.body.classList.add('with-nav');
+  
+  // Add special class for home page
+  const current = location.pathname.split('/').pop() || 'index.html';
+  if (current === 'index.html') {
+    document.body.classList.add('home-page');
+  }
   const navRoot = document.getElementById('navbar');
   if(!navRoot) return;
 
