@@ -26,3 +26,17 @@ class FoodItem(models.Model):
 
     def __str__(self):
         return self.name + "expires in " + str(self.expirationTimeDays) + " days"
+    
+
+#Oishi's code starts here
+class Resources(models.Model):
+    title = models.CharField(max_length=300)
+    description = models.TextField()
+    url = models.URLField(blank=True,null=True)
+    category = models.CharField(max_length=100)
+    type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
+
+
