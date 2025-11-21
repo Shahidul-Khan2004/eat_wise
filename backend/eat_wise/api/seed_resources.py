@@ -147,6 +147,6 @@ def run():
      for item in data:
          Resources.objects.create(**item)
 
-         
+         #comment
          
      print("Resources seeded successfully!")
