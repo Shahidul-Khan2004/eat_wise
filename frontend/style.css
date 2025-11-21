@@ -6,3 +6,47 @@
     width: 130px;
     height: 130px;
 }
+
+/* Basic navbar styling */
+#navbar {
+    display: flex;
+    gap: 1rem;
+    padding: 10px 16px;
+    background: #f3f5f3;
+    border-bottom: 1px solid #d0d6cf;
+    font-family: system-ui, sans-serif;
+    align-items: center;
+}
+#navbar a {
+    text-decoration: none;
+    color: #386641;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+}
+#navbar a.active {
+    background: #386641;
+    color: #fff;
+}
+#navbar .spacer { flex: 1; }
+#navbar button.logout {
+    background: #bc4749;
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+#navbar button.logout:hover { background: #a63d3f; }
+
+/* Layout fix: pages originally center a single card via body{display:grid;place-items:center}. 
+     When navbar is added that grid causes overlap or wrong centering. Use body.with-nav to override. */
+body.with-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 100vh;
+    padding: 0; /* individual pages already add padding around their card; keep navbar flush */
+}
+body.with-nav .card{margin-top:24px}
