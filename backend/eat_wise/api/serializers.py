@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-from .models import Test, Profile, FoodItem
+from .models import Test, Profile, FoodItem,Resources 
 
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,4 +59,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 class FoodItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = FoodItem
+        fields = "__all__"
+
+
+#Oishi's code starts here 
+
+class ResourcesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Resources
         fields = "__all__"
