@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-q*f9-m*tu!9r+mcvrz*8%_209x&s1z!m13lj)&bm29chmds)69
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1", "0.0.0.0", "localhost"]
+ALLOWED_HOSTS = [".vercel.app"]
+CSRF_TRUSTED_ORIGINS = ["*"]
 
 
 # Application definition
@@ -57,14 +58,15 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'eat_wise.urls'
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:5500",
-    "http://127.0.0.1:5500",
-    "http://localhost:8080",
-    "http://0.0.0.0:8080",
-]
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "http://127.0.0.1:8000",
+#     "http://localhost:5500",
+#     "http://127.0.0.1:5500",
+#     "http://localhost:8080",
+#     "http://0.0.0.0:8080",
+# ]
 
 # For development only: allow all origins so CORS won't block local testing.
 # Remove or set to False in production.
