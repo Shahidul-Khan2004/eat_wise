@@ -3,6 +3,11 @@
 import os
 import sys
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except Exception:
+    print("Could not load .env file")
 
 def main():
     """Run administrative tasks."""
