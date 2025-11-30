@@ -35,6 +35,12 @@ class UserInventory(models.Model):
     purchase_date = models.DateField(auto_now_add=True)
     expiry_date = models.DateField(null=True, blank=True)
     
+    class Meta:
+        indexes = [
+            models.Index(fields=['user', '-purchase_date']),
+        ]
+        ordering = ['-purchase_date']
+    
     def __str__(self):
         return f"{self.user.username} - {self.food_item.name} ({self.quantity} {self.unit})"
 
@@ -45,6 +51,12 @@ class ConsumptionLog(models.Model):
     unit = models.CharField(max_length=50, default='units')
     consumption_date = models.DateField(auto_now_add=True)
     notes = models.TextField(blank=True, null=True)
+    
+    class Meta:
+        indexes = [
+            models.Index(fields=['user', '-consumption_date']),
+        ]
+        ordering = ['-consumption_date']
     
     def __str__(self):
         return f"{self.user.username} consumed {self.quantity_consumed} {self.unit} of {self.food_item.name}"

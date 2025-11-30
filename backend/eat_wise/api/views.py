@@ -70,8 +70,8 @@ class UserInventoryListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        # Only show this user's inventory
-        return UserInventory.objects.filter(user=self.request.user)
+        # Only show this user's inventory with food_item pre-loaded
+        return UserInventory.objects.filter(user=self.request.user).select_related('food_item')
     
     def perform_create(self, serializer):
         # Auto-assign logged-in user when creating
@@ -82,7 +82,7 @@ class UserInventoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        return UserInventory.objects.filter(user=self.request.user)
+        return UserInventory.objects.filter(user=self.request.user).select_related('food_item')
 
 # Consumption Log Views
 class ConsumptionLogListCreateView(generics.ListCreateAPIView):
@@ -90,8 +90,8 @@ class ConsumptionLogListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        # Only show this user's consumption logs
-        return ConsumptionLog.objects.filter(user=self.request.user).order_by('-consumption_date')
+        # Only show this user's consumption logs with food_item pre-loaded
+        return ConsumptionLog.objects.filter(user=self.request.user).select_related('food_item').order_by('-consumption_date')
     
     def perform_create(self, serializer):
         # Auto-assign logged-in user
@@ -102,7 +102,7 @@ class ConsumptionLogDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def get_queryset(self):
-        return ConsumptionLog.objects.filter(user=self.request.user)
+        return ConsumptionLog.objects.filter(user=self.request.user).select_related('food_item')
 
 #Oishi's First APIView 
 
