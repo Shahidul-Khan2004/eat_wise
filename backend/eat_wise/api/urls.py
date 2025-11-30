@@ -1,7 +1,12 @@
 from . import views
 from django.urls import path
+from django.http import JsonResponse
+
+def health_check(request):
+    return JsonResponse({'status': 'ok', 'service': 'eat_wise_api'})
 
 urlpatterns = [
+    path('health/', health_check, name='health-check'),
     # path('test/<int:pk>/', views.TestPostRetriveUpdateDestroyView.as_view(), name='test-detail'),
     # path('test/', views.TestListCreateView.as_view(), name='test-list-create'),
     path('users/', views.UserAPIView.as_view(), name='user-list-create'),
