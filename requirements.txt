@@ -1,9 +1,6 @@
-django
-djangorestframework
-djangorestframework-simplejwt
-django-cors-headers
-pillow
-dj-database-url
-psycopg[binary]
-supabase
-python-dotenv
+django>=5.0,<5.3
+djangorestframework>=3.14,<4.0
+djangorestframework-simplejwt>=5.3,<6.0
+django-cors-headers>=4.0,<5.0
+dj-database-url>=2.0,<3.0
+psycopg[binary]>=3.1,<4.0

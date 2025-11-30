@@ -1,10 +1,61 @@
-.venv
+# Virtual environments
+.venv/
 myenv/
+venv/
+env/
+backend/.venv/
+backend/myenv/
+backend/venv/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment variables
 .env
+.env.local
+
+# Databases
 *.sqlite3
 db.sqlite3
+*.db
+
+# Frontend (separate deployment)
 frontend/
+
+# IDE
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# Git
 .git/
+.gitignore
+
+# Media/Static (should use CDN)
+media/
+staticfiles/
+static/
+
+# Documentation
+README.md
+*.md
+DEPLOYMENT_GUIDE_COMPLETE.md
+NETLIFY_DEPLOYMENT.md
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Unnecessary data
+backend/eat_wise/data.json
+
+# Test files
+**/tests/
+**/test_*.py
+**/*_test.py
