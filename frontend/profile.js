@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   // Inventory & Consumption functionality
-  const apiBase = `${location.protocol}//${location.hostname}:8000/api`;
+  const apiBase = 'https://eat-wise-silk.vercel.app/api';
   
   // Load food items for dropdowns
   async function loadFoodItems() {
