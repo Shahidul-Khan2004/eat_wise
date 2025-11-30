@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Load user inventory
   async function loadInventory() {
     const list = document.getElementById('inventoryList');
+    list.innerHTML = '<p class="muted">⏳ Loading inventory...</p>';
     try {
       const res = await fetch(`${apiBase}/userInventory/`, {headers: authHeader()});
       if (!res.ok) { list.innerHTML = '<p class="muted">Failed to load inventory</p>'; return; }
@@ -122,6 +123,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Load consumption logs
   async function loadConsumption() {
     const list = document.getElementById('consumptionList');
+    list.innerHTML = '<p class="muted">⏳ Loading consumption history...</p>';
     try {
       const res = await fetch(`${apiBase}/consumptionLogs/`, {headers: authHeader()});
       if (!res.ok) { list.innerHTML = '<p class="muted">Failed to load consumption history</p>'; return; }
@@ -167,6 +169,10 @@ document.addEventListener('DOMContentLoaded',()=>{
   // Add to inventory
   document.getElementById('inventoryForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = '⏳ Adding...';
+    submitBtn.disabled = true;
     const body = {
       food_item: parseInt(document.getElementById('invFoodItem').value),
       quantity: parseFloat(document.getElementById('invQuantity').value),
@@ -190,6 +196,9 @@ document.addEventListener('DOMContentLoaded',()=>{
       }
     } catch {
       alert('Network error');
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     }
   });
 
@@ -251,8 +260,10 @@ document.addEventListener('DOMContentLoaded',()=>{
     }
   };
 
-  // Initialize
-  populateFoodDropdowns();
-  loadInventory();
-  loadConsumption();
+  // Initialize - load everything in parallel for faster perceived performance
+  Promise.all([
+    populateFoodDropdowns(),
+    loadInventory(),
+    loadConsumption()
+  ]).catch(err => console.error('Error loading data:', err));
 });
