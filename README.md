@@ -92,7 +92,7 @@ SECRET_KEY=your-secret-key-here-make-it-long-and-random
 DEBUG=True
 
 # For Supabase (use Session pooler for local, Transaction pooler for Vercel)
-DATABASE_URL=postgresql://postgres.[PROJECT-ID]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres
+DATABASE_URL=postgresql://postgres.[PROJECT-ID]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres?sslmode=require
 
 # Optional: If using Supabase client directly (not needed for basic setup)
 SUPABASE_URL=https://[PROJECT-ID].supabase.co
@@ -267,14 +267,6 @@ eat_wise/
 4. Push to branch: `git push origin feature-name`
 5. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👥 Authors
-
-- Shahidul Khan - [GitHub](https://github.com/Shahidul-Khan2004)
-
 ## 🙏 Acknowledgments
 
 - Django Documentation
@@ -282,7 +274,6 @@ This project is licensed under the MIT License.
 - Supabase
 - Vercel
 - Netlify
-- You can then log in at `http://127.0.0.1:8000/admin/` and add FoodItem, Resources, etc.
 
 ## Code Organization
 - **backend/eat_wise/api/**
@@ -296,5 +287,3 @@ This project is licensed under the MIT License.
   - JS files for page logic and API calls
   - `nav.js`: Dynamic navbar
 
----
-For questions or issues, please open an issue or contact the maintainer.
