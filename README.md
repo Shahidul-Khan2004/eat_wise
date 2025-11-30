@@ -12,7 +12,6 @@
 - [Local Setup](#-local-setup)
 - [Loading Sample Data](#-loading-sample-data)
 - [Deployment](#-deployment)
-- [API Documentation](#-api-documentation)
 
 ## 🛠 Tech Stack
 
@@ -89,9 +88,15 @@ No configuration needed! SQLite database will be created automatically.
 
 ```bash
 # backend/eat_wise/.env
-DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@[YOUR-PROJECT].supabase.co:5432/postgres
 SECRET_KEY=your-secret-key-here-make-it-long-and-random
 DEBUG=True
+
+# For Supabase (use Session pooler for local, Transaction pooler for Vercel)
+DATABASE_URL=postgresql://postgres.[PROJECT-ID]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres
+
+# Optional: If using Supabase client directly (not needed for basic setup)
+SUPABASE_URL=https://[PROJECT-ID].supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-from-supabase
 ```
 
 4. Update `backend/eat_wise/eat_wise/settings.py` if needed (already configured to read `DATABASE_URL`)
@@ -237,111 +242,6 @@ VALUES
    - Base directory: `frontend`
    - Publish directory: `frontend`
 4. Deploy
-
-## 📖 API Documentation
-
-### Base URL
-- Production: `https://eat-wise-silk.vercel.app/api/`
-- Local: `http://localhost:8000/api/`
-
-### Authentication Endpoints
-
-#### Register
-```http
-POST /api/auth/register/
-Content-Type: application/json
-
-{
-  "username": "user123",
-  "email": "user@example.com",
-  "password": "securepassword",
-  "householdSize": 4,
-  "dietaryPreferences": "Vegetarian",
-  "location": "New York",
-  "budgetRange": "$100-$200"
-}
-```
-
-#### Login
-```http
-POST /api/auth/login/
-Content-Type: application/json
-
-{
-  "username": "user123",
-  "password": "securepassword"
-}
-
-Response:
-{
-  "access": "eyJ0eXAiOiJKV1QiLCJhbGc...",
-  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGc..."
-}
-```
-
-### Protected Endpoints (Require JWT Token)
-
-Send token in header:
-```http
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
-```
-
-- `GET /api/profile/` - Get user profile
-- `PATCH /api/profile/` - Update profile
-- `GET /api/foodItems/` - List all food items
-- `GET /api/userInventory/` - Get user's inventory
-- `POST /api/userInventory/` - Add item to inventory
-- `GET /api/consumptionLogs/` - Get consumption history
-- `POST /api/consumptionLogs/` - Log food consumption
-- `GET /api/resources/manage/` - Get educational resources
-
-### Health Check
-```http
-GET /api/health/
-
-Response:
-{
-  "status": "ok",
-  "service": "eat_wise_api"
-}
-```
-
-## 🐛 Troubleshooting
-
-### Backend Issues
-
-**Migration errors:**
-```bash
-python manage.py migrate --run-syncdb
-```
-
-**Port already in use:**
-```bash
-# Windows
-netstat -ano | findstr :8000
-taskkill /PID <PID> /F
-
-# macOS/Linux
-lsof -ti:8000 | xargs kill -9
-```
-
-**Database connection errors with Supabase:**
-- Verify you're using the **Transaction mode pooler** (port 6543)
-- Check DATABASE_URL format: `postgresql://` (not `postgres://`)
-- Ensure password is correct and URL-encoded if it contains special characters
-
-### Frontend Issues
-
-**API calls failing:**
-- Check that backend is running
-- Verify API URL in frontend JS files
-- Check browser console for CORS errors
-- Clear browser cache (Ctrl+Shift+R)
-
-**Login not working:**
-- Clear localStorage: `localStorage.clear()` in browser console
-- Check backend logs for errors
-- Verify JWT token settings in `settings.py`
 
 ## 📝 Project Structure
 
