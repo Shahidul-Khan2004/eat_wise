@@ -15,6 +15,8 @@ function getApi(){
 }
 
 async function load(){
+  const list = document.getElementById('items');
+  list.innerHTML = '<p style="color:#6b7280;padding:20px;text-align:center;">⏳ Loading food items...</p>';
   const data = await fetch(API).then(r=>r.json());
   const items = Array.isArray(data) ? data : (data.results || []);
   ALL = items.map(x=>({
