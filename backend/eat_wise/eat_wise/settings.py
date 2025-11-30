@@ -49,12 +49,9 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'eat_wise.urls'
@@ -73,8 +70,11 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  # Increased to reduce refresh requests
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 MEDIA_URL = '/media/'
@@ -104,8 +104,12 @@ WSGI_APPLICATION = 'eat_wise.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=600,
+        conn_max_age=0,  # Don't persist connections in serverless
         conn_health_checks=True,
+        options={
+            'connect_timeout': 10,
+            'options': '-c statement_timeout=10000',  # 10 second query timeout
+        } if os.getenv('DATABASE_URL') else {},
     )
 }
 
