@@ -17,6 +17,7 @@ __pycache__/
 # Environment variables
 .env
 .env.local
+backend/eat_wise/.env
 
 # Databases
 *.sqlite3
@@ -46,16 +47,32 @@ README.md
 *.md
 DEPLOYMENT_GUIDE_COMPLETE.md
 NETLIFY_DEPLOYMENT.md
+*.pdf
+*.docx
 
 # Build artifacts
 build/
 dist/
 *.egg-info/
 
-# Unnecessary data
+# Unnecessary data files
 backend/eat_wise/data.json
+
+# Seed scripts (only needed for setup, not production)
+backend/eat_wise/api/seed_*.py
+
+# Backup files
+*.bak
+*.backup
+backend/eat_wise/eat_wise/settings.py.bak
+
+# Netlify config (not needed for Vercel)
+netlify.toml
 
 # Test files
 **/tests/
 **/test_*.py
 **/*_test.py
+
+# Supabase client (if using direct psycopg)
+backend/eat_wise/supabase_client.py
