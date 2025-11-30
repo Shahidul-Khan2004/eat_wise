@@ -101,17 +101,27 @@ WSGI_APPLICATION = 'eat_wise.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',
-        conn_max_age=0,  # Don't persist connections in serverless
-        conn_health_checks=True,
-        options={
-            'connect_timeout': 10,
-            'options': '-c statement_timeout=10000',  # 10 second query timeout
-        } if os.getenv('DATABASE_URL') else {},
-    )
-}
+# Parse database URL with optimized settings for serverless
+if os.getenv('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.getenv('DATABASE_URL'),
+            conn_max_age=0,  # Don't persist connections in serverless
+            conn_health_checks=True,
+        )
+    }
+    # Add PostgreSQL-specific options
+    DATABASES['default']['OPTIONS'] = {
+        'connect_timeout': 10,
+    }
+else:
+    # Local development with SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
