@@ -188,18 +188,6 @@ VALUES
 - Vercel account: [https://vercel.com](https://vercel.com)
 - Supabase database (required for production)
 
-#### Important: Use Session Pooler for Vercel!
-
-⚠️ **Critical:** Vercel serverless functions require connection pooling. Use Supabase's **Transaction Mode Pooler**:
-
-1. Go to Supabase Dashboard → **Settings → Database**
-2. Find **Connection Pooling** section
-3. Use the **Transaction mode** connection string (port `6543`)
-   ```
-   postgresql://postgres:[PASSWORD]@[PROJECT].pooler.supabase.com:6543/postgres
-   ```
-4. **Do NOT use** Session mode (port `5432`) - it won't work with Vercel!
-
 #### Deployment Steps
 
 1. **Connect GitHub to Vercel:**
@@ -209,12 +197,8 @@ VALUES
 
 2. **Set Environment Variables:**
    - Go to: **Project Settings → Environment Variables**
-   - Add:
-     ```
-     DATABASE_URL=postgresql://postgres:[PASSWORD]@[PROJECT].pooler.supabase.com:6543/postgres
-     SECRET_KEY=your-production-secret-key
-     DEBUG=False
-     ```
+   - Copy all variables from your local `backend/eat_wise/.env` file
+   - Or just upload your .env file
 
 3. **Deploy:**
    - Click **Deploy**
