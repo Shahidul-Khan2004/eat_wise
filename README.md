@@ -1,53 +1,403 @@
-# Eat Wise
+# 🍽️ Eat Wise
 
-## Project Overview
-Eat Wise is a full-stack web application for managing household food inventory, logging consumption, and accessing food-related resources. It helps users track what they have, reduce waste, and make informed dietary choices.
+> Smart food management for every household - Track inventory, reduce waste, and make informed dietary choices.
 
-## Tech Stack
-- **Backend:** Django 5, Django REST Framework, SQLite3
-- **Frontend:** HTML5, CSS3, Vanilla JavaScript
-- **Authentication:** JWT (djangorestframework-simplejwt)
-- **CORS:** django-cors-headers
+**Live Demo:** 
+- Frontend: [https://eat-wise-silk.netlify.app/](https://eat-wise-silk.netlify.app/)
+- Backend API: [https://eat-wise-silk.vercel.app/api/](https://eat-wise-silk.vercel.app/api/)
 
-## Setup Steps
+## 📚 Table of Contents
+- [Tech Stack](#-tech-stack)
+- [Features](#-features)
+- [Local Setup](#-local-setup)
+- [Loading Sample Data](#-loading-sample-data)
+- [Deployment](#-deployment)
+- [API Documentation](#-api-documentation)
+
+## 🛠 Tech Stack
 
 ### Backend
-1. Create and activate a Python virtual environment:
-   ```powershell
-   python -m venv myenv
-   .\myenv\Scripts\Activate.ps1
-   ```
-2. Install dependencies:
-   ```powershell
-   pip install -r requirements.txt
-   ```
-3. Apply migrations and start the server:
-   ```powershell
-   cd backend/eat_wise
-   python manage.py migrate
-   python manage.py runserver 8000
-   ```
+- Django 5.1.3
+- Django REST Framework 3.15.2
+- djangorestframework-simplejwt 5.3.1 (JWT Authentication)
+- django-cors-headers 4.5.0
+- PostgreSQL (Production) / SQLite3 (Development)
 
 ### Frontend
-1. Serve static files (for local development):
-   ```powershell
-   cd frontend
-   python -m http.server 8080
-   ```
-2. Open `http://localhost:8080/index.html` in your browser.
+- HTML5, CSS3, Vanilla JavaScript
+- Responsive design
+- JWT token-based authentication
 
-## Environment Configuration Notes
-- CORS is enabled for local development (`CORS_ALLOW_ALL_ORIGINS = True`). For production, restrict origins in `settings.py`.
-- JWT token lifetimes and authentication settings are configured in `settings.py`.
-- Database is SQLite3 by default; change `ENGINE` in `settings.py` for production.
-- Static files are served from the `frontend` folder.
+### Infrastructure
+- **Backend Hosting:** Vercel (Serverless)
+- **Frontend Hosting:** Netlify
+- **Database:** Supabase PostgreSQL (Production)
 
-## Seed Data Usage Instructions
-- To add initial food items or resources, use Django admin or create fixtures.
-- Example: To create a superuser for admin access:
-   ```powershell
-   python manage.py createsuperuser
+## ✨ Features
+
+- 🔐 User authentication (Register/Login with JWT)
+- 👤 User profile management
+- 📦 Food inventory tracking
+- 🍴 Consumption logging
+- 📊 Food item database with categories
+- 📚 Educational resources library
+- 🔄 Real-time data synchronization
+
+## 🚀 Local Setup
+
+### Prerequisites
+- Python 3.9 or higher
+- pip (Python package manager)
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Shahidul-Khan2004/eat_wise.git
+cd eat_wise
+```
+
+### 2. Backend Setup
+
+#### Create Virtual Environment
+```bash
+# Windows
+python -m venv .venv
+.venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+#### Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+#### Configure Database
+
+**Option A: SQLite (Quick Start - Default)**
+
+No configuration needed! SQLite database will be created automatically.
+
+**Option B: PostgreSQL/Supabase (Recommended for Production)**
+
+1. Create a Supabase project at [https://supabase.com](https://supabase.com)
+2. Get your database connection string from: **Settings → Database → Connection String (URI)**
+3. Create `.env` file in `backend/eat_wise/`:
+
+```bash
+# backend/eat_wise/.env
+DATABASE_URL=postgresql://postgres:[YOUR-PASSWORD]@[YOUR-PROJECT].supabase.co:5432/postgres
+SECRET_KEY=your-secret-key-here-make-it-long-and-random
+DEBUG=True
+```
+
+4. Update `backend/eat_wise/eat_wise/settings.py` if needed (already configured to read `DATABASE_URL`)
+
+#### Run Migrations
+```bash
+cd backend/eat_wise
+python manage.py migrate
+```
+
+#### Create Superuser (Optional)
+```bash
+python manage.py createsuperuser
+```
+
+#### Start Backend Server
+```bash
+python manage.py runserver
+```
+
+Backend will be available at: `http://localhost:8000/api/`
+
+### 3. Frontend Setup
+
+Open a **new terminal** (keep backend running):
+
+```bash
+cd frontend
+python -m http.server 8080
+```
+
+Frontend will be available at: `http://localhost:8080/`
+
+**Important:** Update API URLs in frontend if needed:
+- By default, frontend is configured to use the production API: `https://eat-wise-silk.vercel.app/api/`
+- For local backend, update in each JS file:
+  ```javascript
+  const apiBase = 'http://localhost:8000/api';
+  ```
+
+## 📊 Loading Sample Data
+
+### Option 1: Load from data.json (Food Items & Resources)
+
+```bash
+cd backend/eat_wise
+
+# Load food items
+python manage.py shell
+>>> from api.seed_fooditem import seed_food_items
+>>> seed_food_items()
+>>> exit()
+
+# Load resources
+python manage.py shell
+>>> from api.seed_resources import seed_resources
+>>> seed_resources()
+>>> exit()
+```
+
+### Option 2: Use Django Admin
+
+1. Start the server: `python manage.py runserver`
+2. Go to: `http://localhost:8000/admin/`
+3. Login with superuser credentials
+4. Add data manually through the admin interface
+
+### Option 3: Import data.json to Supabase (Production)
+
+If using Supabase:
+
+1. Go to Supabase Dashboard → **Table Editor**
+2. Select table (`api_fooditem` or `api_resources`)
+3. Click **Insert → Insert row** or use **SQL Editor** to bulk import
+
+Example SQL for bulk import:
+```sql
+INSERT INTO api_fooditem (name, category, "expirationTimeDays", "costPerUnit")
+VALUES 
+  ('Apple', 'Fruit', 7, 2.50),
+  ('Banana', 'Fruit', 5, 1.50);
+```
+
+## 🌐 Deployment
+
+### Backend Deployment (Vercel)
+
+#### Prerequisites
+- Vercel account: [https://vercel.com](https://vercel.com)
+- Supabase database (required for production)
+
+#### Important: Use Session Pooler for Vercel!
+
+⚠️ **Critical:** Vercel serverless functions require connection pooling. Use Supabase's **Transaction Mode Pooler**:
+
+1. Go to Supabase Dashboard → **Settings → Database**
+2. Find **Connection Pooling** section
+3. Use the **Transaction mode** connection string (port `6543`)
    ```
+   postgresql://postgres:[PASSWORD]@[PROJECT].pooler.supabase.com:6543/postgres
+   ```
+4. **Do NOT use** Session mode (port `5432`) - it won't work with Vercel!
+
+#### Deployment Steps
+
+1. **Connect GitHub to Vercel:**
+   - Go to [https://vercel.com/new](https://vercel.com/new)
+   - Import your GitHub repository
+   - Vercel auto-detects Python
+
+2. **Set Environment Variables:**
+   - Go to: **Project Settings → Environment Variables**
+   - Add:
+     ```
+     DATABASE_URL=postgresql://postgres:[PASSWORD]@[PROJECT].pooler.supabase.com:6543/postgres
+     SECRET_KEY=your-production-secret-key
+     DEBUG=False
+     ```
+
+3. **Deploy:**
+   - Click **Deploy**
+   - Wait 2-3 minutes
+   - Your API will be live at: `https://your-project.vercel.app/api/`
+
+4. **Run Migrations:**
+   ```bash
+   # Locally, connect to production database
+   cd backend/eat_wise
+   DATABASE_URL="your-supabase-url" python manage.py migrate
+   ```
+
+### Frontend Deployment (Netlify)
+
+#### Option 1: Drag & Drop (Easiest)
+1. Go to [https://app.netlify.com/drop](https://app.netlify.com/drop)
+2. Drag the `frontend/` folder
+3. Done! Your site is live
+
+#### Option 2: GitHub Integration (Automatic Deployments)
+1. Go to [https://app.netlify.com/start](https://app.netlify.com/start)
+2. Connect your GitHub repository
+3. **Build settings:**
+   - Base directory: `frontend`
+   - Publish directory: `frontend`
+4. Deploy
+
+## 📖 API Documentation
+
+### Base URL
+- Production: `https://eat-wise-silk.vercel.app/api/`
+- Local: `http://localhost:8000/api/`
+
+### Authentication Endpoints
+
+#### Register
+```http
+POST /api/auth/register/
+Content-Type: application/json
+
+{
+  "username": "user123",
+  "email": "user@example.com",
+  "password": "securepassword",
+  "householdSize": 4,
+  "dietaryPreferences": "Vegetarian",
+  "location": "New York",
+  "budgetRange": "$100-$200"
+}
+```
+
+#### Login
+```http
+POST /api/auth/login/
+Content-Type: application/json
+
+{
+  "username": "user123",
+  "password": "securepassword"
+}
+
+Response:
+{
+  "access": "eyJ0eXAiOiJKV1QiLCJhbGc...",
+  "refresh": "eyJ0eXAiOiJKV1QiLCJhbGc..."
+}
+```
+
+### Protected Endpoints (Require JWT Token)
+
+Send token in header:
+```http
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGc...
+```
+
+- `GET /api/profile/` - Get user profile
+- `PATCH /api/profile/` - Update profile
+- `GET /api/foodItems/` - List all food items
+- `GET /api/userInventory/` - Get user's inventory
+- `POST /api/userInventory/` - Add item to inventory
+- `GET /api/consumptionLogs/` - Get consumption history
+- `POST /api/consumptionLogs/` - Log food consumption
+- `GET /api/resources/manage/` - Get educational resources
+
+### Health Check
+```http
+GET /api/health/
+
+Response:
+{
+  "status": "ok",
+  "service": "eat_wise_api"
+}
+```
+
+## 🐛 Troubleshooting
+
+### Backend Issues
+
+**Migration errors:**
+```bash
+python manage.py migrate --run-syncdb
+```
+
+**Port already in use:**
+```bash
+# Windows
+netstat -ano | findstr :8000
+taskkill /PID <PID> /F
+
+# macOS/Linux
+lsof -ti:8000 | xargs kill -9
+```
+
+**Database connection errors with Supabase:**
+- Verify you're using the **Transaction mode pooler** (port 6543)
+- Check DATABASE_URL format: `postgresql://` (not `postgres://`)
+- Ensure password is correct and URL-encoded if it contains special characters
+
+### Frontend Issues
+
+**API calls failing:**
+- Check that backend is running
+- Verify API URL in frontend JS files
+- Check browser console for CORS errors
+- Clear browser cache (Ctrl+Shift+R)
+
+**Login not working:**
+- Clear localStorage: `localStorage.clear()` in browser console
+- Check backend logs for errors
+- Verify JWT token settings in `settings.py`
+
+## 📝 Project Structure
+
+```
+eat_wise/
+├── backend/
+│   └── eat_wise/
+│       ├── api/                    # Django app
+│       │   ├── models.py           # Database models
+│       │   ├── views.py            # API views
+│       │   ├── serializers.py      # DRF serializers
+│       │   ├── urls.py             # API routes
+│       │   └── migrations/         # Database migrations
+│       ├── eat_wise/
+│       │   ├── settings.py         # Django configuration
+│       │   ├── urls.py             # Main URL routing
+│       │   └── wsgi.py             # WSGI entry point
+│       ├── manage.py               # Django management
+│       └── data.json               # Sample data
+├── frontend/
+│   ├── index.html                  # Landing page
+│   ├── login.html                  # Login page
+│   ├── register.html               # Registration
+│   ├── profile.html                # User profile
+│   ├── inventory.html              # Food inventory
+│   ├── resources.html              # Educational resources
+│   └── *.js, *.css                 # JavaScript and styles
+├── index.py                        # Vercel entry point
+├── vercel.json                     # Vercel configuration
+├── requirements.txt                # Python dependencies
+└── README.md                       # This file
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -m 'Add feature'`
+4. Push to branch: `git push origin feature-name`
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 👥 Authors
+
+- Shahidul Khan - [GitHub](https://github.com/Shahidul-Khan2004)
+
+## 🙏 Acknowledgments
+
+- Django Documentation
+- Django REST Framework
+- Supabase
+- Vercel
+- Netlify
 - You can then log in at `http://127.0.0.1:8000/admin/` and add FoodItem, Resources, etc.
 
 ## Code Organization
