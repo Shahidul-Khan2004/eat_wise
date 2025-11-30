@@ -10,7 +10,7 @@ function init(){
 }
 
 function getApi(){
-  const base = `${location.protocol}//${location.hostname}:8000`;
+  const base = 'https://eat-wise-silk.vercel.app';
   return `${base}/api/foodItems/`;
 }
 

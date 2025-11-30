@@ -4,7 +4,7 @@ function authHeader(){const t=getAccess();return t?{"Authorization":"Bearer "+t}
 async function loadProfile(){
   const msg=document.getElementById('msg');
   msg.textContent='Loading...'; msg.className='';
-  const apiBase=`${location.protocol}//${location.hostname}:8000/api/profile/`;
+  const apiBase='https://eat-wise-silk.vercel.app/api/profile/';
   try{
     const res=await fetch(apiBase,{headers:{...authHeader()}});
     if(!res.ok){msg.textContent='Failed to load profile'; msg.className='err'; return;}
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       location: f.location.value.trim(),
       budgetRange: f.budgetRange.value.trim()
     };
-    const apiBase=`${location.protocol}//${location.hostname}:8000/api/profile/`;
+    const apiBase='https://eat-wise-silk.vercel.app/api/profile/';
     try{
       const res=await fetch(apiBase,{
         method:'PATCH',

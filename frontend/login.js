@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       password: form.password.value
     };
 
-    const apiBase = `${location.protocol}//${location.hostname}:8000/api/auth/login/`;
+    const apiBase = 'https://eat-wise-silk.vercel.app/api/auth/login/';
 
     try {
       const res = await fetch(apiBase,{

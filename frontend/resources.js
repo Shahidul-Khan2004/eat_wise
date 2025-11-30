@@ -3,9 +3,7 @@
   const currentPage = location.pathname.split('/').pop() || 'index.html';
   if (currentPage !== 'resources.html') return;
 
-  const apiBase = (location.protocol === 'file:' || !location.hostname)
-    ? 'http://127.0.0.1:8000/api'
-    : `${location.protocol}//${location.hostname}:8000/api`;
+  const apiBase = 'https://eat-wise-silk.vercel.app/api';
 
   const els = {};
   document.addEventListener('DOMContentLoaded', () => {
